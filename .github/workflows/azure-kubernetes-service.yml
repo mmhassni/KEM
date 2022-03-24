@@ -39,7 +39,7 @@ env:
   CLUSTER_NAME: "gestion-evenement"
   CLUSTER_RESOURCE_GROUP: "utilitaire"
   NAMESPACE: "default"
-  APP_NAME: "{app-name}"
+  APP_NAME: "hello-world"
   
 jobs:
   build:
