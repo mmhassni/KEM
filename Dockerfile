@@ -5,15 +5,15 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
-COPY ["backend/Kumojin.Backend.Web/Kumojin.Backend.Web/Kumojin.Backend.Web.csproj", "./"]
-RUN dotnet restore "Kumojin.Backend.Web.csproj"
+COPY ["KEM.EventManger.API/KEM.EventManger.API.csproj", "./"]
+RUN dotnet restore "KEM.EventManger.API.csproj"
 COPY . .
 WORKDIR "/src/"
-RUN dotnet build "backend/Kumojin.Backend.Web/Kumojin.Backend.Web/Kumojin.Backend.Web.csproj" -c Release -o /app/build
+RUN dotnet build "KEM.EventManger.API/KEM.EventManger.API.csproj" -c Release -o /app/build
 RUN dotnet test -c Release
 
 FROM build AS publish
-RUN dotnet publish "backend/Kumojin.Backend.Web/Kumojin.Backend.Web/Kumojin.Backend.Web.csproj" -c Release -o /app/publish
+RUN dotnet publish "KEM.EventManger.API/KEM.EventManger.API.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
