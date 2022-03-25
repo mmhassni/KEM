@@ -41,6 +41,7 @@ env:
   NAMESPACE: "default"
   APP_NAME: "hello-world"
   SECRET: "docker-image-pull-secret"
+  K8S_RESOURCE_GROUP: "utilitaire"
   
 jobs:
   build:
@@ -70,7 +71,8 @@ jobs:
       with:
         creds: '${{ secrets.AZURE_CREDENTIALS }}'
         cluster-name: ${{ env.CLUSTER_NAME }}
-        resource-group: ${{ env.CLUSTER_RESOURCE_GROUP }}
+        resource-group: ${{ env.K8S_RESOURCE_GROUP }}
+  
     
     # Create namespace if doesn't exist
     - run: |
