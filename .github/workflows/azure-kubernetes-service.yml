@@ -41,6 +41,7 @@ env:
   NAMESPACE: "default"
   APP_NAME: "hello-world"
   SECRET: "docker-image-pull-secret"
+  K8S_RESOURCE_GROUP: "utilitaire"
   
 jobs:
   build:
@@ -76,7 +77,7 @@ jobs:
     - name: Get K8s context
       uses: azure/aks-set-context@v2.0
       with:
-        resource-group: ${{ env.RESOURCE_GROUP }}
+        resource-group: ${{ env.K8S_RESOURCE_GROUP }}
         cluster-name: ${{ env.CLUSTER_NAME }}
 
     # Retrieves the credentials for pulling images from your Azure Container Registry
