@@ -40,10 +40,13 @@ env:
   CLUSTER_RESOURCE_GROUP: "utilitaire"
   NAMESPACE: "default"
   APP_NAME: "hello-world"
+  SECRET: "docker-image-pull-secret"
   
 jobs:
   build:
     runs-on: ubuntu-latest
+    
+    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     - uses: actions/checkout@main
     
@@ -54,10 +57,13 @@ jobs:
         username: ${{ secrets.REGISTRY_USERNAME }} 
         password: ${{ secrets.REGISTRY_PASSWORD }}
     
-    # Container build and push to a Azure Container Registry (ACR)
-    - run: |
-        docker build . -t ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ github.sha }}
-        docker push ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ github.sha }}
+    # Container build to a Azure Container Registry (ACR)
+    - name: docker build
+      run: docker build . -t ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ github.sha }}
+    
+    # Container build to a Azure Container Registry (ACR)
+    - name: docker push
+      run: docker push ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ github.sha }}
 
     # Set the target Azure Kubernetes Service (AKS) cluster. 
     - uses: azure/aks-set-context@v1
@@ -73,9 +79,13 @@ jobs:
     # Create image pull secret for ACR
     - uses: azure/k8s-create-secret@v1
       with:
+        # Container registry url
         container-registry-url: ${{ env.REGISTRY_NAME }}.azurecr.io
+        # Container registry username
         container-registry-username: ${{ secrets.REGISTRY_USERNAME }}
+        # Container registry password
         container-registry-password: ${{ secrets.REGISTRY_PASSWORD }}
+        # Name of the secret. You can use this secret name in the Kubernetes YAML configuration file.
         secret-name: ${{ env.SECRET }}
         namespace: ${{ env.NAMESPACE }}
         arguments: --force true
@@ -83,11 +93,14 @@ jobs:
     # Deploy app to AKS
     - uses: azure/k8s-deploy@v1
       with:
+        # Path to the manifest files which will be used for deployment.
         manifests: |
-          ${{ github.workspace }}/manifests/deployment.yaml
-          ${{ github.workspace }}/manifests/service.yaml
+          k8s/deployment.yml
+          k8s/service.yml
+        # Fully qualified resource URL of the image(s) to be used for substitutions on the manifest files Example: contosodemo.azurecr.io/helloworld:test  
         images: |
           ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ github.sha }}
+        # Name of a docker-registry secret that has already been set up within the cluster. Each of these secret names are added under imagePullSecrets field for the workloads found in the input manifest files
         imagepullsecrets: |
           ${{ env.SECRET }}
         namespace: ${{ env.NAMESPACE }}
