@@ -15,6 +15,7 @@ spec:
       containers:
       - name: api
         image: kumojincr.azurecr.io/kem-api:latest
+        imagePullPolicy: Always
         resources:
           requests:
             cpu: 100m
