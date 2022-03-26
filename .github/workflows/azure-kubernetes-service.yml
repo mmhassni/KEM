@@ -39,7 +39,7 @@ env:
   CLUSTER_NAME: "gestion-evenement"
   CLUSTER_RESOURCE_GROUP: "utilitaire"
   NAMESPACE: "default"
-  APP_NAME: "hello-world"
+  APP_NAME: "kem-api"
   SECRET: "docker-image-pull-secret"
   K8S_RESOURCE_GROUP: "utilitaire"
   
