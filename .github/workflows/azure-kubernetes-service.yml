@@ -107,3 +107,5 @@ jobs:
         imagepullsecrets: |
           ${{ env.SECRET }}
         namespace: ${{ env.NAMESPACE }}
+        route-method: ingress
+ 
