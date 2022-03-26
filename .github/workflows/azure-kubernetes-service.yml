@@ -93,7 +93,7 @@ jobs:
         arguments: --force true
     
     # Deploy app to AKS
-    - uses: azure/k8s-deploy@v1
+    - uses: azure/k8s-deploy@v1.4
       with:
         # Path to the manifest files which will be used for deployment.
         manifests: |
@@ -108,4 +108,5 @@ jobs:
           ${{ env.SECRET }}
         namespace: ${{ env.NAMESPACE }}
         route-method: ingress
+        action: promote
  
