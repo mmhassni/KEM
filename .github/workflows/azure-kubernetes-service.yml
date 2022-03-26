@@ -109,4 +109,4 @@ jobs:
         namespace: ${{ env.NAMESPACE }}
         route-method: ingress
         action: deploy
- 
+        force: true
