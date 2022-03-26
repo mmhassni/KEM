@@ -108,5 +108,5 @@ jobs:
           ${{ env.SECRET }}
         namespace: ${{ env.NAMESPACE }}
         route-method: ingress
-        action: promote
+        action: deploy
  
