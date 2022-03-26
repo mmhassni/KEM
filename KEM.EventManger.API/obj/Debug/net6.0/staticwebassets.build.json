@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "5ITrQf1ot7UmelkyQSgRSDmn9Y6dcKF36ZgJ7MZQLIg=",
+  "Source": "KEM.EventManger.API",
+  "BasePath": "_content/KEM.EventManger.API",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
