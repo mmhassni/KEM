@@ -13,8 +13,8 @@ spec:
         app: api
     spec:
       containers:
-      - name: api
-        image: kumojincr.azurecr.io/kem-api:latest
+      - name: kem-api
+        image: kumojincr.azurecr.io/kem-api
         imagePullPolicy: Always
         resources:
           requests:
